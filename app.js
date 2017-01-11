@@ -6,6 +6,13 @@ var MongoStore = require('connect-mongo')(session);
 var app = express();
 var mongoURI = process.env.MONGODB_URI;
 
+// use sessions for tracking logins
+app.use(session({
+    secret: 'treehouse loves you',
+    resave: true,
+    saveUninitialized: false
+}));
+
 // mongodb connection
 mongoose.connect(mongoURI);
 var db = mongoose.connection;

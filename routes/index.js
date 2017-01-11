@@ -2,10 +2,21 @@ var express = require('express');
 var router = express.Router();
 var User = require("../models/users");
 
+// GET /login
+router.get("/login", function(req, res, next){
+    return res.render('login', { title: 'Login'});
+});
+
+// POST /login information
+router.get("/login", function(req, res, next){
+    //hash submitted password, check with database for username& password
+    return res.send("Logged In!");
+})
+
 // GET /profile
 router.get("/profile", function(req, res, next){
     return res.render('profile', { title: 'Profile'});
-})
+});
 
 // GET /register
 router.get('/register', function(req, res, next){
