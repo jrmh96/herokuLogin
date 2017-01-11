@@ -13,6 +13,12 @@ var db = mongoose.connection;
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
 
+// Initialize app
+ var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+  });
+
 // parse incoming requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
