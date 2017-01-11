@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var User = require("../models/users");
 
+// GET /profile
+
+
 // GET /register
 router.get('/register', function(req, res, next){
     return res.render('register', { title: 'Sign Up'});    
@@ -21,6 +24,25 @@ router.post('/register', function(req, res, next){
             err.status = 400;
             return next(err);
         }
+
+        // create object with all the form information
+
+        var userData = {
+            email: req.body.email,
+            name: req.body.name,
+            favoriteBook: req.body.favoriteBook,
+            password: req.body.password
+        };
+
+        // use schema's 'create' method to insert document into Mongo
+        User.create(userData, function(error, user){
+            if(error) {
+                return next(error);
+            } else {
+                return res.redirect('/profile');
+            }
+        });
+
     }else {
         var err = new Error('All Fields Required');
         err.status = 400;
