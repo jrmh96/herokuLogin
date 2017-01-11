@@ -8,10 +8,31 @@ router.get("/login", function(req, res, next){
 });
 
 // POST /login information
-router.get("/login", function(req, res, next){
+router.post("/login", function(req, res, next){
     //hash submitted password, check with database for username& password
-    return res.send("Logged In!");
-})
+    
+    //check email and password have both been entered
+    if(req.body.email && req.body.password){
+        User.authenticate(req.body.email, req.body.password, function(error, user){
+            if(error || !user){
+                var err = new Error('Wrong email or password');
+                err.status = 401;
+                return next(err);
+            }
+            else{
+                req.session.userId = user._id; //this is important - this tells express to assign a session id to the current session
+                //left side = the session userId --> to be stored in cookie
+                //right side = user = user json document, 
+                return res.redirect("/");
+            }
+        });
+    }
+    else{
+        var err = new Error('Email and Password are required.');
+        err.status = 401;
+        return next(err);
+    }
+});
 
 // GET /profile
 router.get("/profile", function(req, res, next){
@@ -52,6 +73,7 @@ router.post('/register', function(req, res, next){
             if(error) {
                 return next(error);
             } else {
+                req.session.userId = user._id; //once you register, you immediately become logged in
                 return res.redirect('/profile');
             }
         });
