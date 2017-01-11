@@ -1,0 +1,21 @@
+{
+  "name": "herokulogin",
+  "version": "1.0.0",
+  "description": "A project for learning how to add authentication to a web application",
+  "scripts": {
+    "start": "node ./app"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.19",
+    "mongoose": "^4.7.6",
+    "pug": "2.0.0-beta6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jrmh96/herokulogin"
+  },
+  "author": "Jeremy Hu",
+  "license": "MIT"
+}
