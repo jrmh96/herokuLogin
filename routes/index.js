@@ -3,7 +3,9 @@ var router = express.Router();
 var User = require("../models/users");
 
 // GET /profile
-
+router.get("/profile", function(req, res, next){
+    return res.render('profile', { title: 'Profile'});
+})
 
 // GET /register
 router.get('/register', function(req, res, next){
