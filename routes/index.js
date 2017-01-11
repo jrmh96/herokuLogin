@@ -7,14 +7,14 @@ var User = require("../models/users");
 
 router.get('logout', function(req, res, next){
     if(req.session) {
-        req.session.destroy(err){
+        req.session.destroy(function(err){
             if(err){
                 return next(err);
             }
             else{
-                return res.redirect('/');
+                return res.redirect("/");
             }
-        }
+        });
     }
 });
 
