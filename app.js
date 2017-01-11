@@ -4,9 +4,10 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var app = express();
+var mongoURI = process.env.MONGODB_URI;
 
 // mongodb connection
-mongoose.connect("mongodb://localhost:27017/bookworm");
+mongoose.connect(mongoURI);
 var db = mongoose.connection;
 
 // mongo error
@@ -17,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 
 // serve static files from /public
-app.use(express.static(dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 // view engine setup
 app.set('view engine', 'pug');
@@ -27,3 +28,9 @@ app.set('views', __dirname+'/views');
 var routes = require('./routes/index');
 app.use('/', routes);
 
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('File Not Found');
+  err.status = 404;
+  next(err);
+});
