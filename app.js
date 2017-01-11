@@ -13,6 +13,15 @@ app.use(session({
     saveUninitialized: false
 }));
 
+// make user ID available in templates
+app.use(function (req, res, next){
+    res.locals.currentUser = req.session.userId;
+    // if the user is logged in, res (response).locals will hold the value of the session userId
+    // if not logged in, user session is null, value for currentUser is undefined
+    // in express, all views have access to the res.locals object
+    next();
+})
+
 // mongodb connection
 mongoose.connect(mongoURI);
 var db = mongoose.connection;
