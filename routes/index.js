@@ -2,6 +2,22 @@ var express = require('express');
 var router = express.Router();
 var User = require("../models/users");
 
+
+// GET /logout
+
+router.get('logout', function(req, res, next){
+    if(req.session) {
+        req.session.destroy(err){
+            if(err){
+                return next(err);
+            }
+            else{
+                return res.redirect('/');
+            }
+        }
+    }
+});
+
 // GET /login
 router.get("/login", function(req, res, next){
     return res.render('login', { title: 'Login'});
