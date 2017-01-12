@@ -53,11 +53,6 @@ router.post("/login", function(req, res, next){
 
 // GET /profile
 router.get("/profile", mid.loggedIn,function(req, res, next){
-    if(! req.session.userId){
-        var err = new Error("Login to view this page.");
-        err.status = 403;
-        return next(err);
-    }
 
     //populate the profile page with information stored in Mongo
     User.findById(req.session.userId)
