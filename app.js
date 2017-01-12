@@ -23,8 +23,15 @@ app.use(session({
     })
 }));
 
+// make user ID available in templates
+// (allows navbar to change based on logged in/ logged out status)
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.session.userId;
+  next();
+});
+
 // Initialize app
- var server = app.listen(process.env.PORT || 8080, function () {
+ var server = app.listen(process.env.PORT || 3000, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });
