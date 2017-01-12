@@ -6,13 +6,6 @@ var MongoStore = require('connect-mongo')(session);
 var app = express();
 var mongoURI = process.env.MONGODB_URI;
 
-// use sessions for tracking logins
-app.use(session({
-    secret: 'treehouse loves you',
-    resave: true,
-    saveUninitialized: false
-}));
-
 // make user ID available in templates
 app.use(function (req, res, next){
     res.locals.currentUser = req.session.userId;
@@ -28,6 +21,16 @@ var db = mongoose.connection;
 
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
+
+// use sessions for tracking logins
+app.use(session({
+    secret: 'treehouse loves you',
+    resave: true,
+    saveUninitialized: false,
+    store: new MongoStore({
+        mongooseConnection: db
+    })
+}));
 
 // Initialize app
  var server = app.listen(process.env.PORT || 8080, function () {
