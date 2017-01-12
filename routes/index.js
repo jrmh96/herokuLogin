@@ -52,7 +52,7 @@ router.post("/login", function(req, res, next){
 });
 
 // GET /profile
-router.get("/profile", function(req, res, next){
+router.get("/profile", mid.loggedIn,function(req, res, next){
     if(! req.session.userId){
         var err = new Error("Login to view this page.");
         err.status = 403;
